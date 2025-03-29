@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 export function AppLayout() {
   return (
     <>
-      <header className="p-5 border-b border-solid border-b-gray-200">
+      <header className="bg-white p-5 border-b border-solid border-b-gray-200">
         <div className="max-w-screen-xl mx-auto flex justify-around">
           <div className="w-12">
             <img
@@ -25,7 +25,7 @@ export function AppLayout() {
         </div>
       </header>
 
-      <main className='max-w-5xl mx-auto p-5'>
+      <main className='p-5 bg-[#e5e5e5]'>
         <Outlet />
       </main>
 
