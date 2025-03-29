@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 
 export function AppLayout() {
   return (
@@ -13,14 +13,14 @@ export function AppLayout() {
           </div>
 
           <nav className="my-2">
-            {/* <Link to="/boards/create"> */}
+            <Link to="/boards/create">
               <button
                 type="button"
                 className="text-[15px] text-[#008cf6] font-semibold hover:bg-[#ebf5ff] leading-[32px] px-4 rounded-md border-[#b2dcfc] hover:border-[#ebf5ff] border-2 border-solid cursor-pointer"
               >
                 Crear
               </button>
-            {/* </Link> */}
+            </Link>
           </nav>
         </div>
       </header>
