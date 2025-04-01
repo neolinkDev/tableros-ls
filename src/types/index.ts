@@ -1,18 +1,18 @@
 
 
-export type Board = {
+export interface Board {
   id: string;
   boardTitle: string;
   lists: List[];
 }
 
-type List = {
+export interface List {
   id: string;
   title: string;
   tasks: Task[];
 }
 
-type Task = {
+export interface Task {
   id: string;
   content: string;
   

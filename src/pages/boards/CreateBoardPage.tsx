@@ -5,6 +5,7 @@ import type { Board } from '../../types';
 
 export function CreateBoardPage() {
 
+  //
   const { register, handleSubmit } = useForm<Board>({
     defaultValues: { 
       boardTitle: ""
