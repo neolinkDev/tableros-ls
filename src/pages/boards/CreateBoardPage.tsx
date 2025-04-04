@@ -1,9 +1,14 @@
+import { useContext } from 'react';
 import { Link } from 'react-router';
-import { H1 } from '../../components/H1';
 import { useForm } from 'react-hook-form';
+import { BoardContext } from '../../contexts/BoardContext/boardContext';
+
 import type { Board } from '../../types';
+import { H1 } from '../../components/H1';
 
 export function CreateBoardPage() {
+
+  const { createBoard } = useContext(BoardContext);
 
   //
   const { register, handleSubmit } = useForm<Board>({
@@ -14,7 +19,7 @@ export function CreateBoardPage() {
 
   //
   const handleFormSubmit = (data: Board) => {
-    console.log(data);
+    createBoard(data.boardTitle);
   }
 
   return (
