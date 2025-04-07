@@ -1,12 +1,15 @@
 import { useContext } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { BoardContext } from '../../contexts/BoardContext/boardContext';
 
 import type { Board } from '../../types';
 import { H1 } from '../../components/H1';
 
 export function CreateBoardPage() {
+
+  const navigate = useNavigate();
 
   const { createBoard } = useContext(BoardContext);
 
@@ -19,7 +22,9 @@ export function CreateBoardPage() {
 
   //
   const handleFormSubmit = (data: Board) => {
+    toast.success("Tablero creado.")
     createBoard(data.boardTitle);
+    navigate("/");
   }
 
   return (

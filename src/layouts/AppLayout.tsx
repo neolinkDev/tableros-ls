@@ -1,4 +1,5 @@
 import { Link, Outlet } from "react-router";
+import { Toaster } from "sonner";
 
 export function AppLayout() {
   return (
@@ -34,6 +35,8 @@ export function AppLayout() {
           &copy; {new Date().getFullYear()}
         </p>
       </footer>
+
+      <Toaster position="bottom-left" />
     </>
   );
 }
