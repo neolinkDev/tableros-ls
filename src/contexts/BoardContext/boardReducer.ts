@@ -3,6 +3,7 @@ import { ActionType, BoardAction } from "./boardActions";
 
 
 export interface BoardState {
+  length: any;
   boards: Board[];
 }
 
