@@ -1,8 +1,9 @@
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { useForm } from 'react-hook-form';
+// import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { BoardContext } from '../../contexts/BoardContext/boardContext';
+import { BoardForm } from '../../components/BoardForm';
 
 import type { Board } from '../../types';
 import { H1 } from '../../components/H1';
@@ -14,11 +15,11 @@ export function CreateBoardPage() {
   const { createBoard } = useContext(BoardContext);
 
   //
-  const { register, handleSubmit } = useForm<Board>({
-    defaultValues: { 
-      boardTitle: ""
-    }
-  });
+  // const { register, handleSubmit } = useForm<Board>({
+  //   defaultValues: { 
+  //     boardTitle: ""
+  //   }
+  // });
 
   //
   const handleFormSubmit = (data: Board) => {
@@ -43,7 +44,9 @@ export function CreateBoardPage() {
           </Link>
         </nav>
 
-        <form
+        <BoardForm onSubmit={handleFormSubmit} />
+
+        {/* <form
           className="flex flex-col sm:flex-row sm:items-center p-5 max-w-xl mx-auto mt-10 bg-white sm:space-x-4"
           onSubmit={handleSubmit(handleFormSubmit)}
           noValidate
@@ -69,7 +72,7 @@ export function CreateBoardPage() {
             value="Crear tablero"
             className="text-white sm:w-auto bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 rounded-full text-sm px-5 py-2.5 text-center cursor-pointer font-bold"
           />
-        </form>
+        </form> */}
       </div>
     </section>
   );
