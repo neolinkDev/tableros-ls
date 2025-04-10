@@ -32,7 +32,7 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
   return (
     <BoardContext.Provider
       value={{
-        boards: state,
+        boards: state.boards,
         createBoard,
       }}
     >
