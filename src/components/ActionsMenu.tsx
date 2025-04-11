@@ -1,13 +1,20 @@
+import { Link } from 'react-router';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
- 
   PencilIcon,
-  
   TrashIcon,
   EllipsisVerticalIcon,
 } from '@heroicons/react/24/solid';
+import type { Board } from '../types';
 
-export function ActionsMenu() {
+interface ActionsMenuProps {
+  boardID: Board['id']
+}
+
+export function ActionsMenu({ boardID }: ActionsMenuProps) {
+
+
+
   return (
     <Menu>
       <MenuButton className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-none cursor-pointer">
@@ -20,22 +27,19 @@ export function ActionsMenu() {
         className="w-52 origin-top-right rounded-lg border border-gray-300 bg-white p-1 text-sm/6 text-[#333] shadow-lg transition duration-75 ease-linear [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
       >
         <MenuItem>
-          <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-100 cursor-pointer">
+          <Link
+            to={`/boards/${boardID}/edit`}
+            className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-100 cursor-pointer"
+          >
             <PencilIcon className="size-4 fill-gray-500" />
             Editar
-            <kbd className="ml-auto hidden font-sans text-xs text-gray-400 group-data-[focus]:inline">
-              ⌘E
-            </kbd>
-          </button>
+          </Link>
         </MenuItem>
 
         <MenuItem>
           <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-100 cursor-pointer">
             <TrashIcon className="size-4 fill-gray-500" />
             Eliminar
-            <kbd className="ml-auto hidden font-sans text-xs text-gray-400 group-data-[focus]:inline">
-              ⌘D
-            </kbd>
           </button>
         </MenuItem>
       </MenuItems>

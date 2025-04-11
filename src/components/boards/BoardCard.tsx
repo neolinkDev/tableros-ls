@@ -30,7 +30,7 @@ export function BoardCard({ board }: BoardCardProps) {
               </Link>
 
               <div className="relative"> {/* Contenedor para posicionamiento relativo */}
-              <ActionsMenu />
+              <ActionsMenu boardID={board.id} />
             </div>
 
               {/* <div className="flex justify-around">
