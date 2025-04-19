@@ -27,6 +27,14 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  //
+  const updateBoard = (id: string, boardTitle: string) => {
+    dispatch({
+      type: ActionType.UPDATE_BOARD,
+      payload: { id, boardTitle },
+    });
+  };
+
   // ... otras acciones
 
   return (
@@ -34,6 +42,7 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
       value={{
         boards: state.boards,
         createBoard,
+        updateBoard
       }}
     >
       {children}

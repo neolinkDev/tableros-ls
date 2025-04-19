@@ -28,6 +28,20 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
       };
     }
 
+
+    case ActionType.UPDATE_BOARD: {
+      const { id, boardTitle } = action.payload;
+
+      const updatedBoards = state.boards.map((board) =>
+        board.id === id ? { ...board, boardTitle } : board
+      );
+
+      return {
+        ...state,
+        boards: updatedBoards,
+      };
+    }
+
     default:
       return state;
   }
