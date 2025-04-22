@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, Navigate, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 import { BoardContext } from "../../contexts/BoardContext/boardContext";
 import { Board } from "../../types";
@@ -22,21 +22,22 @@ export default function EditeBoardPage() {
 
   // validaciones con returns anticipados
   if (!boardID) {
-    return <p className="text-red-600">Error: ID de tablero inválido.</p>;
+    // return <p className="text-red-600">Error: ID de tablero inválido.</p>;
+    return <Navigate to="/404" replace />;
   }
 
-  // devuelve el tablero a editar
+  // busca y devuelve el tablero que se va a editar
   const boardToEdit = boards.find((board) => board.id === boardID);
 
-
   if (!boardToEdit) {
-    return <p className="text-red-600">Tablero no encontrado.</p>;
+    // return <p className="text-red-600">Tablero no encontrado.</p>;
+    return <Navigate to="/404" replace />;
   }
 
-  // handler del submit
+  // handle del submit
   const handleFormSubmit = (data: Board) => {
     updateBoard(boardID, data.boardTitle);
-    toast.success('Cambios guardados.');
+    toast.success('Tablero editado.');
     navigate('/');
   };
 

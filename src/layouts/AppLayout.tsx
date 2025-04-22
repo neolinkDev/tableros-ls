@@ -36,7 +36,7 @@ export function AppLayout() {
         </p>
       </footer>
 
-      <Toaster position="bottom-left" />
+      <Toaster closeButton position="bottom-left" />
     </>
   );
 }

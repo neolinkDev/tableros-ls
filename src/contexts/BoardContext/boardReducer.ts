@@ -28,7 +28,7 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
       };
     }
 
-
+    //
     case ActionType.UPDATE_BOARD: {
       const { id, boardTitle } = action.payload;
 
