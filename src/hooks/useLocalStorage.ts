@@ -9,6 +9,7 @@ export const useLocalStorage = <T extends Board | List | Task>(
 
   // lee el valor desde `localStorage` y si no existe o hay un error utiliza el `initialValue`
   const [storedValue, setStoredValue] = useState<T[]>(() => {
+
     try {
       const item = localStorage.getItem(key);
       return item ? (JSON.parse(item) as T[]) : initialValue;
@@ -20,6 +21,7 @@ export const useLocalStorage = <T extends Board | List | Task>(
 
   // guarda el nuevo valor en `localStorage` y actualiza el state
   const setValue = (value: T[] | ((prevValue: T[]) => T[])) => {
+    
     try {
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;

@@ -42,6 +42,19 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
       };
     }
 
+    //
+    case ActionType.DELETE_BOARD: {
+
+      // const { id } = action.payload;
+
+      // const boardToDelete = state.boards.filter(( board )=> board.id !== id)
+
+      return {
+        ...state,
+        boards: state.boards.filter(board => board.id !== action.payload.id)
+      }
+    }
+
     default:
       return state;
   }

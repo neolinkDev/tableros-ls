@@ -8,7 +8,7 @@ export interface Board {
 
 export interface List {
   id: string;
-  title: string;
+  listTitle: string;
   tasks: Task[];
 }
 

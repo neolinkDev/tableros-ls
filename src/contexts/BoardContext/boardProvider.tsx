@@ -35,6 +35,14 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  //
+  const deleteBoard = (id: string) => {
+    dispatch({
+      type: ActionType.DELETE_BOARD,
+      payload: { id }
+    })
+  }
+
   // ... otras acciones
 
   return (
@@ -42,7 +50,8 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
       value={{
         boards: state.boards,
         createBoard,
-        updateBoard
+        updateBoard,
+        deleteBoard
       }}
     >
       {children}

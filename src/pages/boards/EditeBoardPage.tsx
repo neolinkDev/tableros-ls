@@ -52,6 +52,7 @@ export default function EditeBoardPage() {
             <button
               type="button"
               className="text-[15px] text-[#008cf6] font-semibold hover:bg-[#ebf5ff] leading-[32px] px-4 rounded-md border-transparent hover:border-[#ebf5ff] border-2 border-solid cursor-pointer"
+              aria-label="Volver al inicio"
             >
               Volver
             </button>

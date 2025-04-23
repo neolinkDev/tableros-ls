@@ -1,4 +1,7 @@
+import { useContext } from 'react';
 import { Link } from 'react-router';
+import { BoardContext } from '../contexts/BoardContext/boardContext';
+import { toast } from 'sonner';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
   PencilIcon,
@@ -13,6 +16,14 @@ interface ActionsMenuProps {
 
 export function ActionsMenu({ boardID }: ActionsMenuProps) {
 
+  const { deleteBoard } = useContext(BoardContext);
+
+  //
+  const handleBoardDelete = () => {
+    if (!confirm('¿Eliminar este tablero?')) return;
+    deleteBoard(boardID);
+    toast.success('Tablero eliminado.');
+  }
 
 
   return (
@@ -37,7 +48,10 @@ export function ActionsMenu({ boardID }: ActionsMenuProps) {
         </MenuItem>
 
         <MenuItem>
-          <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-100 cursor-pointer">
+          <button 
+            className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-100 cursor-pointer"
+            onClick={handleBoardDelete}
+          >
             <TrashIcon className="size-4 fill-gray-500" />
             Eliminar
           </button>
