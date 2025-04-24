@@ -11,12 +11,12 @@ import { BoardForm } from "../../components/BoardForm";
 
 export default function EditeBoardPage() {
 
-   // Obtener `id` de params
-   const { boardID } = useParams<{ boardID: string }>();
+  // Obtener `id` de params
+  const { boardID } = useParams<{ boardID: string }>();
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // estado global de tableros
+  // context con el estado global de los tableros
   const { boards, updateBoard } = useContext(BoardContext);
 
 
