@@ -6,12 +6,14 @@ export function AppLayout() {
     <>
       <header className="bg-white p-5 border-b border-solid border-b-gray-200">
         <div className="max-w-screen-xl mx-auto flex justify-around">
-          <div className="w-12">
-            <img
-              src="/logo.png"
-              alt="Logotipo tableros visuales estilo trello"
-            />
-          </div>
+          <Link to="/" aria-label="Ir a la página de inicio">
+            <div className="w-12">
+              <img
+                src="/logo.png"
+                alt="Logotipo tableros visuales estilo trello"
+              />
+            </div>
+          </Link>
 
           <nav className="my-2">
             <Link to="/boards/create">

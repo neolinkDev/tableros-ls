@@ -8,6 +8,7 @@ interface BoardContextType {
   createBoard: (boardTitle: string) => void;
   updateBoard: (id: string, boardTitle: string) => void;
   deleteBoard: (id: string) => void
+  createList: (id: string, listTitle: string) => void;
   // ... similar para listas y tareas
 }
 

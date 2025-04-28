@@ -55,6 +55,32 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
       }
     }
 
+    //
+    case ActionType.CREATE_LIST: {
+
+      // const { id, listTitle } = action.payload;
+      
+      // creates a new list
+      const newList = {
+        id: crypto.randomUUID(),
+        listTitle: action.payload.listTitle,
+        tasks: [],
+      };
+
+      // if the id matches, it adds the new list to the list array, otherwise it returns the array unchanged
+      const updatedBoards = state.boards.map((board) =>
+        board.id === action.payload.id
+          ? { ...board, lists: [...board.lists, newList] }
+          : board
+      );
+
+      return { 
+        ...state, 
+        boards: updatedBoards
+       };
+    }
+
+
     default:
       return state;
   }
