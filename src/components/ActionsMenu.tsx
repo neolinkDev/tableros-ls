@@ -25,7 +25,6 @@ export function ActionsMenu({ boardID }: ActionsMenuProps) {
     toast.success('Tablero eliminado.');
   }
 
-
   return (
     <Menu>
       <MenuButton className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-none cursor-pointer">

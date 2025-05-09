@@ -63,13 +63,16 @@ export const NewListModal  = ({
               </h2>
 
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
+
                 <div className="mb-5">
+                  
                   <label
                     htmlFor="listTitle"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
                     Nombre de la lista
                   </label>
+                  
                   <input
                     id="listTitle"
                     {...register('listTitle', { required: true })}
@@ -84,6 +87,7 @@ export const NewListModal  = ({
                 </div>
 
                 <div className="flex justify-end space-x-2">
+
                   <button
                     type="button"
                     className="bg-[#eee] text-[#3C4858] font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 cursor-pointer"
@@ -94,12 +98,14 @@ export const NewListModal  = ({
                   >
                     Cancelar
                   </button>
+
                   <button
                     type="submit"
                     className="text-[15px] text-[#008cf6] font-semibold hover:bg-[#ebf5ff] leading-[32px] px-4 rounded-md border-[#b2dcfc] hover:border-[#ebf5ff] border-2 border-solid cursor-pointer"
                   >
                     Añadir
                   </button>
+
                 </div>
               </form>
             </div>
