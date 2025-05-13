@@ -43,12 +43,20 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
     })
   }
 
+  //
   const createList = (id: string, listTitle: string) => {
     dispatch({
       type: ActionType.CREATE_LIST,
       payload: { id, listTitle }
     })
   }
+
+  const updateList = (boardId: string, listId: string, listTitle: string) => {
+  dispatch({
+    type: ActionType.UPDATE_LIST,
+    payload: { boardId, listId, listTitle },
+  });
+};
 
   // ... otras acciones
 
@@ -59,7 +67,8 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
         createBoard,
         updateBoard,
         deleteBoard,
-        createList
+        createList,
+        updateList
       }}
     >
       {children}

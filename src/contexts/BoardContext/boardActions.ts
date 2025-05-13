@@ -5,7 +5,7 @@ export enum ActionType {
   UPDATE_BOARD,
   DELETE_BOARD,
   CREATE_LIST,
-  // EDITAR_TABLERO,
+  UPDATE_LIST,
   // ELIMINAR_LISTA,
   // EDITAR_LISTA,
   // CREAR_TAREA,
@@ -18,6 +18,7 @@ export type BoardAction =
   | { type: ActionType.UPDATE_BOARD; payload: { id: string; boardTitle: string } }
   | { type: ActionType.DELETE_BOARD; payload: { id: string } }
   | { type: ActionType.CREATE_LIST; payload: { id: string; listTitle: string } }
+  | { type: ActionType.UPDATE_LIST; payload: { boardId: string, listId: string, listTitle: string } }
   // | { type: ActionType.ELIMINAR_LISTA; payload: { tableroId: string; listaId: string } }
   // | { type: ActionType.EDITAR_LISTA; payload: { tableroId: string; listaId: string; nombre: string } }
   // | { type: ActionType.CREAR_TAREA; payload: { tableroId: string; listaId: string; titulo: string; descripcion: string } }
