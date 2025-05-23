@@ -52,11 +52,18 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
   }
 
   const updateList = (boardId: string, listId: string, listTitle: string) => {
-  dispatch({
-    type: ActionType.UPDATE_LIST,
-    payload: { boardId, listId, listTitle },
-  });
-};
+    dispatch({
+      type: ActionType.UPDATE_LIST,
+      payload: { boardId, listId, listTitle },
+    });
+  };
+
+  const createTask = ( boardID: string, listID: string, content: string) => {
+    dispatch({
+      type: ActionType.CREATE_TASK,
+      payload: { boardID, listID, content}
+    })
+  }
 
   // ... otras acciones
 
@@ -68,7 +75,8 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
         updateBoard,
         deleteBoard,
         createList,
-        updateList
+        updateList,
+        createTask
       }}
     >
       {children}

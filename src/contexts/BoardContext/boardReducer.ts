@@ -1,4 +1,4 @@
-import { Board } from "../../types";
+import { Board, Task } from "../../types";
 import { ActionType, BoardAction } from "./boardActions";
 import { updateListInArray } from "./boardReducerHelpers";
 
@@ -7,11 +7,12 @@ export interface BoardState {
   boards: Board[];
 }
 
-export const initialState = {
-  boards: [],
-};
+// export const initialState = {
+//   boards: [],
+// };
 
 export const boardReducer = (state: BoardState, action: BoardAction): BoardState => {
+  
   switch (action.type) {
     // crea un nuevo tablero
     case ActionType.CREATE_BOARD: {
@@ -103,7 +104,59 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
       };
     }
 
+    //
+    case ActionType.CREATE_TASK: {
+
+      const { boardID, listID, content } = action.payload
+      
+      // 
+      const updatedBoards = state.boards.map(board => {
+
+        // if not the target board, return it unchanged
+        if (board.id !== boardID) {
+          return board;
+        }
+
+        // Found the target board, now map over its lists
+        const updatedLists = board.lists.map(list => {
+
+          // If not the target list, return it unchanged
+          if (list.id !== listID) {
+            return list;
+          }
+
+          // found the target list, create the new task
+          const newTask: Task = {
+            id: crypto.randomUUID(), 
+            content,
+          };
+
+          // create a new list object with the new task added to its tasks array
+          return {
+            ...list, 
+            tasks: [...list.tasks, newTask]
+          };
+
+
+        })
+
+        // Create a new board object with the updated lists array
+        return {
+          ...board, // Copy existing board properties
+          lists: updatedLists, // Use the new lists array
+        }
+      
+      })
+
+      // Return the new state with the updated boards array
+      return {
+        ...state, // Copy other state properties if any
+        boards: updatedBoards,
+      };
+
+    }
+
     default:
       return state;
   }
-    };
+};
