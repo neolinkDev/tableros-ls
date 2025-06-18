@@ -7,8 +7,8 @@ import type { Board } from '../types';
 
 interface BoardFormProps {
   onSubmit: SubmitHandler<Board>;
-  isEditing?: boolean; // Prop para indicar si se está editando o creando el tablero
-  initialValues?: { boardTitle: string }; // Prop opcional para los valores iniciales
+  isEditing?: boolean; 
+  initialValues?: { boardTitle: string }; 
 }
 
 export function BoardForm({
@@ -43,7 +43,13 @@ export function BoardForm({
           type="text"
           id="boardTitle"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          {...register('boardTitle', { required: true })}
+          {...register('boardTitle', { 
+            required: true,
+             maxLength: {
+              value: 60,
+              message: ""
+             }
+          })}
         />
       </div>
 

@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 import { toast } from 'sonner';
 import { BoardContext } from '../../contexts/BoardContext/boardContext';
-import { H1 } from '../../components/H1';
+// import { H1 } from '../../components/H1';
 import { NewListModal } from '../../components/list/NewListModal';
 import List from '../../components/list/List';
 
@@ -34,7 +34,10 @@ export default function ListBoardDetails() {
   return (
     <section className="bg-white rounded-md p-2.5">
       <div className="max-w-5xl mx-auto">
-        <H1 text={board.boardTitle} />
+        {/* <H1 text={board.boardTitle} /> */}
+        <h1 className='inline-block font-normal text-2xl text-[#333]'>
+          { board.boardTitle }
+        </h1>
 
         <nav className="my-2">
           <button

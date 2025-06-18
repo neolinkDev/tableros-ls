@@ -140,10 +140,10 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
 
         })
 
-        // Create a new board object with the updated lists array
+        // create a new board object with the updated lists array
         return {
-          ...board, // Copy existing board properties
-          lists: updatedLists, // Use the new lists array
+          ...board, 
+          lists: updatedLists, 
         }
       
       })

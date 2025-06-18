@@ -5,7 +5,7 @@ import AddTaskToList from '../task/AddTaskToList';
 
 interface ListProps {
   lists: ListType[];
-  onEdit: (listID: string) => void;     
+  onEdit: (listID: string) => void;
 }
 
 export default function List({ lists, onEdit }: ListProps) {
