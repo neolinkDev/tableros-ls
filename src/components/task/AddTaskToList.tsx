@@ -58,21 +58,25 @@ export default function AddTaskToList({ listID }: AddTaskToListProps ) {
     toast.success("Tarea agregada.")
   }
 
+  // Desestructura el ref
+  const { ref: registerRef, ...registerProps } = register('content', { required: true });
+
   if (isAddingTask) {
     return (
       <form
         className="mt-2"
-        onSubmit={handleSubmit(handleAddTaskClick)} noValidate
+        onSubmit={handleSubmit(handleAddTaskClick)}
+        noValidate
       >
         <input
           type="text"
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm"
           placeholder="Añadir una tarea..."
           id="taskName"
-          {...register('content', { required: true })}
+          {...registerProps} // ← Solo las props (sin ref)
           ref={(e) => {
-            register('content', { required: true }).ref(e);
-            inputRef.current = e;
+            registerRef(e); // ← Ref de React Hook Form
+            inputRef.current = e; // ← Tu ref personal
           }}
         />
         <div className="mt-1">
@@ -81,7 +85,7 @@ export default function AddTaskToList({ listID }: AddTaskToListProps ) {
           </button>
           <button
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline text-xs cursor-pointer"
-            onClick={ handleCancelClick }
+            onClick={handleCancelClick}
             type="button"
           >
             Cancelar

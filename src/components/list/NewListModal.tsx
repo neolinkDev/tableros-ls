@@ -45,6 +45,9 @@ export const NewListModal = ({
     onClose();
   };
 
+  // Destructuring del register para separar ref de otras props
+  const { ref: registerRef, ...registerProps } = register('listTitle', { required: true });
+
   if (!isOpen) return null;
 
   return (
@@ -78,10 +81,10 @@ export const NewListModal = ({
             <input
               id="listTitle"
               aria-required="true"
-              {...register('listTitle', { required: true })}
-              ref={e => {
-                register('listTitle', { required: true }).ref(e);
-                inputRef.current = e!;
+              {...registerProps}  // Spread de las props del register
+              ref={(e) => {
+                registerRef(e);        // Ref de react-hook-form
+                inputRef.current = e;  // Tu ref personalizado
               }}
               className="
                 block w-full p-2.5 text-sm bg-gray-50 border border-gray-300

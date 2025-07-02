@@ -55,9 +55,8 @@ export function BoardForm({
 
       <input
         type="submit"
-        value={submitLabel}
+        value={ submitLabel }
         className="text-white sm:w-auto bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 rounded-full text-sm px-5 py-2.5 text-center cursor-pointer font-bold"
-        // className="text-white sm:w-auto bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 rounded-full text-sm px-5 py-2.5 text-center cursor-pointer font-bold"
       />
     </form>
   );

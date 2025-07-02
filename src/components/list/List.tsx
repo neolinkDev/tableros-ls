@@ -1,6 +1,7 @@
 
 import { PencilIcon } from '@heroicons/react/20/solid';
 import type { List as ListType } from '../../types';
+import { TaskItem } from '../task/TaskItem';
 import AddTaskToList from '../task/AddTaskToList';
 
 interface ListProps {
@@ -49,12 +50,17 @@ export default function List({ lists, onEdit }: ListProps) {
                 <ul className="mt-2 space-y-1">
                   {
                     list.tasks.map((task) => (
-                      <li 
-                        key={ task.id } 
-                        className="bg-gray-300 p-2 rounded text-sm"
-                      >
-                        { task.content }
-                      </li>
+                      // <li 
+                      //   key={ task.id } 
+                      //   className="bg-gray-300 p-2 rounded text-sm"
+                      // >
+                      //   { task.content }
+                      // </li>
+                      <TaskItem 
+                        key={task.id} 
+                        task={task} 
+                        listID={list.id}
+                      />
                     ))
                   }
                 </ul>

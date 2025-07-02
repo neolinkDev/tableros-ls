@@ -11,6 +11,7 @@ interface BoardContextType {
   createList: (id: string, listTitle: string) => void;
   updateList: (boardId: string, listId: string, listTitle: string) => void
   createTask: ( boardID: string, listID: string, content: string) => void
+  updateTask: (listID: string, taskID: string, content: string) => void;
   // ... similar para listas y tareas
 }
 

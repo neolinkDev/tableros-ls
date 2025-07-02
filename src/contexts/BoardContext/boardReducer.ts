@@ -14,6 +14,7 @@ export interface BoardState {
 export const boardReducer = (state: BoardState, action: BoardAction): BoardState => {
   
   switch (action.type) {
+
     // crea un nuevo tablero
     case ActionType.CREATE_BOARD: {
       const newBoard: Board = {
@@ -148,12 +149,51 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
       
       })
 
-      // Return the new state with the updated boards array
+      // return the new state with the updated boards array
       return {
-        ...state, // Copy other state properties if any
+        ...state, 
         boards: updatedBoards,
       };
 
+    }
+
+    //
+    case ActionType.UPDATE_TASK: {
+
+      const { listID, taskID, content } = action.payload;
+
+      const updatedBoards = state.boards.map(board => {
+
+        // buscar si este board contiene la lista objetivo
+        const targetList = board.lists.find(list => list.id === listID);
+        
+        // si este board no contiene la lista, lo devuelve sin cambios
+        if (!targetList) {
+          return board;
+        }
+        
+        // si tiene la lista, procede con la actualización
+        const updatedLists = board.lists.map(list => {
+
+          if (list.id !== listID) {
+            return list;
+          }
+          
+          const updatedTasks = list.tasks.map(task => {
+            if (task.id !== taskID) {
+              return task;
+            }
+            // encontró la tarea objetivo, actualiza su contenido inmutablemente
+            return { ...task, content };
+          });
+          
+          return { ...list, tasks: updatedTasks };
+        });
+        
+        return { ...board, lists: updatedLists };
+      });
+      
+      return { ...state, boards: updatedBoards };
     }
 
     default:
