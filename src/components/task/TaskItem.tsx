@@ -1,5 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+import { useDraggable } from '@dnd-kit/core';
+
 import type { Task } from '../../types';
 import { BoardContext } from '../../contexts/BoardContext/boardContext';
 import { toast } from 'sonner';
@@ -15,6 +18,13 @@ type TaskFormValues = {
 };
 
 export function TaskItem({ task, listID }: TaskItemProps) {
+
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: task.id,
+    data: {
+      sourceListId: listID,
+    },
+  });
 
   const { updateTask } = useContext(BoardContext); 
 
@@ -92,9 +102,17 @@ export function TaskItem({ task, listID }: TaskItemProps) {
   // Destructuring del register para separar ref de otras props
   const { ref: registerRef, ...registerProps } = register('content', { required: true });
 
+  const style = transform ? {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`
+  } : undefined;
+
   return (
 
     <li
+     {...listeners} // Spread de los listeners de DnD
+            {...attributes} // Spread de los atributos de DnD
+            ref={setNodeRef} // Ref para el draggable
+            style={style}
       className="bg-white p-2 rounded text-sm flex justify-between items-center shadow-xs"
     >
       {
@@ -118,6 +136,7 @@ export function TaskItem({ task, listID }: TaskItemProps) {
         ) : (
           // renderiza un span con el texto de la tarea cuando no está en modo de edición
           <span
+           
             className={`
               flex-grow cursor-pointer text-gray-800 p-1 rounded
             `}

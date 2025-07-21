@@ -72,6 +72,18 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const moveTask = (
+    boardID: string,
+    taskID: string,
+    sourceListID: string,
+    destinationListID: string
+  ) => {
+    dispatch({
+      type: ActionType.MOVE_TASK,
+      payload: { boardID, taskID, sourceListID, destinationListID },
+    });
+  };
+
   // ... otras acciones
 
   return (
@@ -84,7 +96,8 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
         createList,
         updateList,
         createTask,
-        updateTask
+        updateTask,
+        moveTask
       }}
     >
       {children}

@@ -8,6 +8,7 @@ export enum ActionType {
   UPDATE_LIST,
   CREATE_TASK,
   UPDATE_TASK,
+  MOVE_TASK,
   // ELIMINAR_LISTA,
   // EDITAR_LISTA,
   // ELIMINAR_TAREA,
@@ -21,6 +22,15 @@ export type BoardAction =
   | { type: ActionType.UPDATE_LIST; payload: { boardId: string, listId: string, listTitle: string } }
   | { type: ActionType.CREATE_TASK; payload: { boardID: string, listID: string, content: string } }
   | { type: ActionType.UPDATE_TASK; payload: { listID: string, taskID: string, content: string } }
+  | { 
+      type: ActionType.MOVE_TASK; 
+      payload: { 
+        boardID: string;
+        taskID: string; 
+        sourceListID: string; 
+        destinationListID: string;
+      } 
+    }
   // | { type: ActionType.ELIMINAR_LISTA; payload: { tableroId: string; listaId: string } }
   // | { type: ActionType.EDITAR_LISTA; payload: { tableroId: string; listaId: string; nombre: string } }
   // | { type: ActionType.ELIMINAR_TAREA; payload: { tableroId: string; listaId: string; tareaId: string } }
