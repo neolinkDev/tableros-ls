@@ -12,7 +12,11 @@ interface ListColumnProps {
 }
 
 export function ListColumn({ list, onEdit }: ListColumnProps) {
-  // El hook se llama en el nivel superior del componente, lo cual es correcto.
+  /* 
+    Usamos useDroppable para hacer que el componente sea un área donde se pueden soltar tareas
+    Esto permite que las tareas se muevan entre listas dentro de este componente.
+   `setNodeRef` es una función que se usa para asignar la referencia del nodo al elemento HTML. 
+  */
   const { setNodeRef } = useDroppable({
     id: list.id,
   });

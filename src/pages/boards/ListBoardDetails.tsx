@@ -12,6 +12,7 @@ import { NewListModal } from '../../components/list/NewListModal';
 import List from '../../components/list/List';
 
 export default function ListBoardDetails() {
+  
   const { boardID } = useParams<{ boardID: string }>();
   
   const { boards, createList, updateList, moveTask } = useContext(BoardContext);
@@ -46,8 +47,16 @@ export default function ListBoardDetails() {
     const destinationListID = over.id;
     const sourceListID = active.data.current?.sourceListId;
 
+    // 1. `boardID`: El ID del tablero actual, obtenido de los parámetros de la URL.
+    // 2. `sourceListID`: El ID de la lista de origen, que adjuntamos en `TaskItem.tsx`.
+    // 3. `destinationListID`: El ID de la lista de destino, sobre la cual se soltó la tarea.
+    // 4. `taskID`: El ID de la tarea que se está moviendo.
+    // 5. `sourceListID !== destinationListID`: Evita que se ejecute la lógica si el usuario
+    //    suelta la tarea en su lista original. Esto previene un re-renderizado innecesario.
     if (boardID && sourceListID && destinationListID && taskID && sourceListID !== destinationListID) {
-      moveTask(boardID, taskID, sourceListID, destinationListID);
+      // Usamos `String()` para asegurar a TypeScript que los valores son de tipo `string`,
+      // eliminando así el warning de `UniqueIdentifier`.
+      moveTask(String(boardID), String(taskID), String(sourceListID), String(destinationListID));
       toast.success(`Tarea movida exitosamente`);
     }
   };

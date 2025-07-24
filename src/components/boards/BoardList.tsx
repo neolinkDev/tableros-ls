@@ -20,39 +20,7 @@ export function BoardList() {
                 <BoardCard key={board.id} board={board} />
               ))
             }
-            {
-              // boards.map((board) => (
-              //   <li key={board.id}>
-              //     <div>
-                  
-              //       <div className="w-full min-w-0 h-24 overflow-hidden rounded-lg leading-[20px] relative block p-2 bg-black/20 hover:bg-cyan-500">
-                      
-              //         <div className="flex flex-col justify-between h-full gap-2">
-              //           <Link
-              //             to={`/boards/${board.id}`}
-              //             className="text-base font-bold break-words"
-              //           >
-              //             {board.boardName}
-              //           </Link>
-
-              //           <div className="flex justify-around">
-              //             <Link to={`/boards/${board.id}/edit`}>editar</Link>
-
-              //             <button
-              //               type="button"
-              //               className="cursor-pointer"
-              //               onClick={() => handleBoardDelete(board.id)}
-              //             >
-              //               eliminar
-              //             </button>
-              //           </div>
-              //         </div>
-              //         {/* </Link> */}
-              //       </div>
-              //     </div>
-              //   </li>
-              // ))
-            }
+            
           </ul>
         ) : (
           <h3 className="text-center text-[#333] py-20">No tienes tableros aún</h3>

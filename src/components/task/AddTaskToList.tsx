@@ -44,7 +44,6 @@ export default function AddTaskToList({ listID }: AddTaskToListProps ) {
     reset();
   };
 
-  
   // 
   const handleAddTaskClick = (data: {content: Task['content']}) => {
     if (!boardID) {

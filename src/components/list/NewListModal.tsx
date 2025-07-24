@@ -1,13 +1,12 @@
-// src/components/NewListModal.tsx
 import { useEffect, useRef } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 interface NewListModalProps {
   isOpen: boolean;
-  mode: 'create' | 'edit';                        // Modo del modal
-  initialValues?: { listTitle: string };          // Valores iniciales en edición
+  mode: 'create' | 'edit';
+  initialValues?: { listTitle: string };
   onClose: () => void;
-  onSubmit: (title: string) => void;              // Unifica creación/edición
+  onSubmit: (title: string) => void;
 }
 
 type FormValues = { listTitle: string };
@@ -19,33 +18,36 @@ export const NewListModal = ({
   onClose,
   onSubmit,
 }: NewListModalProps) => {
-  // 1. Inicializamos useForm con defaultValues dinámicos,
-  //    usando || para cubrir ambos casos (edición o creación).
-  //    reset(initialValues || { listTitle: '' }) aplica los valores
-  //    correctos al abrir o al cambiar de modo.
+  // Usamos useForm para manejar el estado del formulario.
+  // Los `defaultValues` se establecen dinámicamente: si estamos editando, usamos `initialValues`;
+  // si no, un objeto vacío para empezar desde cero.
   const { register, handleSubmit, reset } = useForm<FormValues>({
-    defaultValues: initialValues || { listTitle: '' },  // Explicación: si initialValues es undefined, usamos un objeto vacío para no romper el formulario.
+    defaultValues: initialValues || { listTitle: '' },
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // 2. Al abrirse o cambiar initialValues, resembramos el formulario
-  //    y ponemos el foco en el <input>
+  // Este efecto se ejecuta cuando el modal se abre o cuando los valores iniciales cambian.
+  // Se asegura de que el formulario siempre muestre los datos correctos y
+  // pone el foco automáticamente en el campo de texto para mejorar la usabilidad.
   useEffect(() => {
     if (isOpen) {
-      reset(initialValues || { listTitle: '' });        // Se asegura de cargar siempre los valores correctos 
+      reset(initialValues || { listTitle: '' });
       inputRef.current?.focus();
     }
   }, [isOpen, initialValues, reset]);
 
-  // 3. Envía el formulario y limpia el estado
+  // Esta función se llama al enviar el formulario.
+  // Ejecuta la lógica de `onSubmit` (crear o editar) y luego
+  // limpia y cierra el modal para que todo quede listo para la próxima vez.
   const handleFormSubmit: SubmitHandler<FormValues> = ({ listTitle }) => {
     onSubmit(listTitle);
     reset({ listTitle: '' });
     onClose();
   };
 
-  // Destructuring del register para separar ref de otras props
+  // separamos la `ref` de las otras propiedades de `register`
+  // para poder asignarla a nuestro `inputRef` personalizado.
   const { ref: registerRef, ...registerProps } = register('listTitle', { required: true });
 
   if (!isOpen) return null;
@@ -56,7 +58,7 @@ export const NewListModal = ({
       aria-modal="true"
       aria-labelledby="new-list-title"
       className="fixed inset-0 bg-black/50 flex items-center justify-center"
-      onClick={e => e.target === e.currentTarget && onClose()}  // Cierra al clickear fuera
+      onClick={e => e.target === e.currentTarget && onClose()} // Cierra el modal si se hace clic en el fondo oscuro.
     >
       <div
         className="
@@ -81,10 +83,10 @@ export const NewListModal = ({
             <input
               id="listTitle"
               aria-required="true"
-              {...registerProps}  // Spread de las props del register
+              {...registerProps} // Aplicamos las propiedades de `register` (como `onChange`, `onBlur`, etc.).
               ref={(e) => {
-                registerRef(e);        // Ref de react-hook-form
-                inputRef.current = e;  // Tu ref personalizado
+                registerRef(e); // Conectamos la `ref` de `react-hook-form`.
+                inputRef.current = e; // Conectamos nuestra `ref` para poder hacer foco.
               }}
               className="
                 block w-full p-2.5 text-sm bg-gray-50 border border-gray-300

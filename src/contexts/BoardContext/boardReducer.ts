@@ -199,7 +199,7 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
     case ActionType.MOVE_TASK: {
       const { boardID, taskID, sourceListID, destinationListID } = action.payload;
 
-      // Optimización: Si la tarea se suelta en la misma lista de la que salió,
+      // Si la tarea se suelta en la misma lista de la que salió,
       // no es necesario hacer ningún cambio en el estado.
       if (sourceListID === destinationListID) {
         return state;
@@ -213,14 +213,14 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
 
         let taskToMove: Task | undefined;
 
-        // Paso 1: Encontrar y eliminar la tarea de la lista de origen.
+        // Encontrar y eliminar la tarea de la lista de origen.
         // Usamos `map` para crear un nuevo array de listas, manteniendo la inmutabilidad.
         const listsWithTaskRemoved = board.lists.map(list => {
-          // Si encontramos la lista de origen...
+          // Si encontramos la lista de origen
           if (list.id === sourceListID) {
-            // ...buscamos la tarea que se está moviendo para guardarla.
+            // buscamos la tarea que se está moviendo para guardarla.
             taskToMove = list.tasks.find(task => task.id === taskID);
-            // Devolvemos una nueva versión de la lista, pero sin la tarea movida.
+            // Devolvemos una nueva versión de la lista, pero sin la tarea que se movió
             return {
               ...list,
               tasks: list.tasks.filter(task => task.id !== taskID),
@@ -230,24 +230,24 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
           return list;
         });
 
-        // Seguridad: Si por alguna razón la tarea no se encontró, devolvemos el tablero
+        // Si por alguna razón la tarea no se encontró, devolvemos el tablero
         // sin cambios para evitar errores.
         if (!taskToMove) {
           return board;
         }
 
         // Paso 2: Agregar la tarea guardada a la lista de destino.
-        // Volvemos a usar `map` sobre el array de listas que ya no contiene la tarea en su lugar original.
+        // Volvemos a usar `map` sobre el array de listas que ya no contiene la tarea 
         const listsWithTaskAdded = listsWithTaskRemoved.map(list => {
           // Si encontramos la lista de destino...
           if (list.id === destinationListID) {
-            // ...devolvemos una nueva versión de la lista con la tarea añadida al final.
+            // devolvemos una nueva versión de la lista con la tarea añadida al final.
             return {
               ...list,
               tasks: [...list.tasks, taskToMove!], // Usamos '!' porque ya hemos verificado que `taskToMove` existe.
             };
           }
-          // Si no es la lista de destino, la devolveemos sin cambios.
+          // Si no es la lista de destino, la devolvemos sin cambios.
           return list;
         });
 
