@@ -1,4 +1,3 @@
-// src/pages/ListBoardDetails.tsx
 import { useContext, useState } from 'react';
 import { Navigate, useParams } from 'react-router';
 

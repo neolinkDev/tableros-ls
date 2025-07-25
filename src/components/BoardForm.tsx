@@ -35,7 +35,7 @@ export function BoardForm({
       <div className="mb-5 space-y-3 sm:flex-grow">
         <label
           htmlFor="boardTitle"
-          className="lock mb-2 text-sm font-medium text-gray-900"
+          className="block mb-2 text-sm font-medium text-gray-900"
         >
           {titleLabel}
         </label>
