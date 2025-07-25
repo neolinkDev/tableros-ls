@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import { Board, Task } from "../../types";
 import { ActionType, BoardAction } from "./boardActions";
 import { updateListInArray } from "./boardReducerHelpers";
@@ -18,7 +19,7 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
     // crea un nuevo tablero
     case ActionType.CREATE_BOARD: {
       const newBoard: Board = {
-        id: crypto.randomUUID(),
+        id: v4(),
         boardTitle: action.payload.boardTitle,
         lists: [],
       };
@@ -61,7 +62,7 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
 
       // creates a new list
       const newList = {
-        id: crypto.randomUUID(),
+        id: v4(),
         listTitle: action.payload.listTitle,
         tasks: [],
       };
@@ -128,7 +129,7 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
 
           // found the target list, create the new task
           const newTask: Task = {
-            id: crypto.randomUUID(), 
+            id: v4(), 
             content,
           };
 
