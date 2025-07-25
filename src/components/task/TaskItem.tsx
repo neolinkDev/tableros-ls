@@ -92,14 +92,14 @@ export function TaskItem({ task, listID }: TaskItemProps) {
     <li
       ref={setNodeRef} // Referencia para el draggable
       style={style}
-      className="bg-white p-2 rounded text-sm flex justify-between items-center shadow-xs"
+      className="bg-white p-2 rounded text-sm flex justify-between items-center shadow-xs select-none active:shadow-lg transition-shadow duration-150"
     >
       <div className="flex items-center flex-grow">
         {/* Área para iniciar el drag */}
         <div
           {...listeners}
           {...attributes}
-          className="drag-handle mr-2 cursor-move select-none"
+          className="drag-handle mr-2 cursor-move select-none touch-none"
         >
           <DragHandleIcon className="h-5 w-5 text-gray-600" />
 
