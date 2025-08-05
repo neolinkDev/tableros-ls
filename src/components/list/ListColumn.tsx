@@ -19,11 +19,12 @@ export function ListColumn({ list, onEdit }: ListColumnProps) {
   */
   const { setNodeRef } = useDroppable({
     id: list.id,
+    data: { type: 'list' }, // etiquetamos este droppable como lista
   });
 
   return (
     <li
-      ref={setNodeRef} // La referencia se asigna al elemento li
+      ref={setNodeRef} // la referencia se asigna al elemento li
       key={list.id}
       className="bg-gray-100 rounded-md shadow-md p-4 w-72 min-h-16 flex-shrink-0"
     >

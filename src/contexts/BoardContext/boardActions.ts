@@ -9,9 +9,7 @@ export enum ActionType {
   CREATE_TASK,
   UPDATE_TASK,
   MOVE_TASK,
-  // ELIMINAR_LISTA,
-  // EDITAR_LISTA,
-  // ELIMINAR_TAREA,
+  REORDER_TASK,
 }
 
 export type BoardAction =
@@ -31,7 +29,13 @@ export type BoardAction =
         destinationListID: string;
       } 
     }
-  // | { type: ActionType.ELIMINAR_LISTA; payload: { tableroId: string; listaId: string } }
-  // | { type: ActionType.EDITAR_LISTA; payload: { tableroId: string; listaId: string; nombre: string } }
-  // | { type: ActionType.ELIMINAR_TAREA; payload: { tableroId: string; listaId: string; tareaId: string } }
-  // | { type: ActionType.EDITAR_TAREA; payload: { tableroId: string; listaId: string; tareaId: string; titulo: string; descripcion: string } };
+  | {
+      // Nueva acción para reordenar tareas
+      type: ActionType.REORDER_TASK;
+      payload: {
+        boardID: string;
+        listID: string;
+        fromIndex: number;
+        toIndex: number;
+      };
+    };

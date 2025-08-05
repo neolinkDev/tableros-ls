@@ -14,9 +14,10 @@ export default function AddTaskToList({ listID }: AddTaskToListProps ) {
   const { createTask } = useContext(BoardContext);
 
   const { boardID } = useParams<{ boardID: string }>();
-  // console.log(boardID)
+
   
   // state to show or not to show the buttons for adding task
+  // Estado para mostrar o no mostrar los botones para agregar tareas
   const [isAddingTask, setIsAddingTask] = useState(false);
 
   //
@@ -35,7 +36,6 @@ export default function AddTaskToList({ listID }: AddTaskToListProps ) {
   //
   const handlePlusClick = () => {
     setIsAddingTask(true);
-    console.log('click en el boton añadir')
   };
 
   //
@@ -72,10 +72,10 @@ export default function AddTaskToList({ listID }: AddTaskToListProps ) {
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm"
           placeholder="Añadir una tarea..."
           id="taskName"
-          {...registerProps} // ← Solo las props (sin ref)
+          {...registerProps} // Solo las props (sin ref)
           ref={(e) => {
-            registerRef(e); // ← Ref de React Hook Form
-            inputRef.current = e; // ← Tu ref personal
+            registerRef(e); // Ref de React Hook Form
+            inputRef.current = e; // Tu ref personal
           }}
         />
         <div className="mt-1">

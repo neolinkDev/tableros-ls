@@ -1,16 +1,12 @@
 import { v4 } from 'uuid';
 import { Board, Task } from "../../types";
 import { ActionType, BoardAction } from "./boardActions";
-import { updateListInArray } from "./boardReducerHelpers";
+import { arrayMove, updateListInArray } from "./boardReducerHelpers";
 
 
 export interface BoardState {
   boards: Board[];
 }
-
-// export const initialState = {
-//   boards: [],
-// };
 
 export const boardReducer = (state: BoardState, action: BoardAction): BoardState => {
   
@@ -138,8 +134,6 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
             ...list, 
             tasks: [...list.tasks, newTask]
           };
-
-
         })
 
         // create a new board object with the updated lists array
@@ -207,7 +201,7 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
       }
 
       const updatedBoards = state.boards.map(board => {
-        // Buscamos el tablero afectado por el cambio. Los demás se devuelven tal cual.
+        
         if (board.id !== boardID) {
           return board;
         }
@@ -217,10 +211,13 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
         // Encontrar y eliminar la tarea de la lista de origen.
         // Usamos `map` para crear un nuevo array de listas, manteniendo la inmutabilidad.
         const listsWithTaskRemoved = board.lists.map(list => {
+
           // Si encontramos la lista de origen
           if (list.id === sourceListID) {
+
             // buscamos la tarea que se está moviendo para guardarla.
             taskToMove = list.tasks.find(task => task.id === taskID);
+            
             // Devolvemos una nueva versión de la lista, pero sin la tarea que se movió
             return {
               ...list,
@@ -265,6 +262,39 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
         boards: updatedBoards,
       };
     }
+
+    case ActionType.REORDER_TASK: {
+      // Reordenar una tarea dentro de la misma lista
+      const { boardID, listID, fromIndex, toIndex } = action.payload;
+
+      // Recorremos los tableros para encontrar el que corresponde
+      const updatedBoards = state.boards.map((board) => {
+
+        // si no es el tablero que se busca devolvemos sin cambios
+        if (board.id !== boardID) return board;
+
+        return {
+          ...board,
+          // Recorremos las listas del tablero para encontrar la correcta
+          lists: board.lists.map((list) => {
+
+            // si no es la lista que se busca devolvemos sin cambios
+            if (list.id !== listID) return list;
+
+            // Reordenamos las tareas usando la función helper arrayMove
+            const reordered = arrayMove(list.tasks, fromIndex, toIndex);
+
+            // Devolvemos la lista con las tareas ya reordenadas
+            return { ...list, tasks: reordered };
+          }),
+        };
+      });
+
+      // Devolvemos el nuevo estado con los tableros actualizados
+      return { ...state, boards: updatedBoards };
+    }
+
+
 
     default:
       return state;

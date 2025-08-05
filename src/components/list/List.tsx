@@ -1,5 +1,5 @@
 import type { List as ListType } from '../../types';
-import { ListColumn } from './ListColumn'; // Importa el nuevo componente
+import { ListColumn } from './ListColumn';
 
 interface ListProps {
   lists: ListType[];
@@ -15,7 +15,7 @@ export default function List({ lists, onEdit }: ListProps) {
       <ol className="flex space-x-4 items-start">
         {
           lists.map(list => (
-            // Usa el nuevo componente ListItem dentro del map
+            
             <ListColumn
               key={list.id}
               list={list}

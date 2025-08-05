@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useDraggable } from '@dnd-kit/core';
+import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { toast } from 'sonner';
 
 import type { Task } from '../../types';
@@ -20,13 +20,37 @@ type TaskFormValues = {
 };
 
 export function TaskItem({ task, listID }: TaskItemProps) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+
+  /* 
+    Marca la tarea como draggable. El `id` es el de la tarea y `data.listId`
+    almacena la lista de origen, que se usará en handleDragEnd para moverla o reordenarla.
+  */
+  const { attributes, listeners, setNodeRef: setDraggableRef, transform } = useDraggable({
     id: task.id,
     data: {
-      sourceListId: listID,
+      type: 'task',
+      listId: listID, // identificamos la lista de origen en el objeto data
     },
   });
 
+  // Configura la tarea como una zona droppable para permitir soltar
+  // otras tareas encima de ella al reordenar. Guardamos la misma listId en data.
+  const { setNodeRef: setDroppableRef } = useDroppable({
+    id: task.id,
+    data: {
+      type: 'task',
+      listId: listID, // también indicamos la lista a la que pertenece
+    },
+  });
+
+  // Combinamos ambas refs para aplicarlas al mismo nodo
+  const setRef = (node: HTMLElement | null) => {
+    setDraggableRef(node);
+    setDroppableRef(node);
+  };
+
+  // Extraemos `updateTask` del context para poder actualizar el contenido
+  // de la tarea cuando el usuario edite y guarde.
   const { updateTask } = useContext(BoardContext); 
 
   // state para controlar si la tarea está en modo de edición
@@ -37,10 +61,11 @@ export function TaskItem({ task, listID }: TaskItemProps) {
     defaultValues: { content: task.content },
   });
 
-  // referencia al input en modo edición
+  // referencia al input en modo edición para poder enfocarlo
   const inputRef = useRef<HTMLInputElement>(null); 
 
   useEffect(() => {
+    // Cuando pasa a modo edición, cargamos el valor actual y enfocamos
     if (isTaskEditing) {
       reset({ content: task.content }); 
       inputRef.current?.focus();      
@@ -66,8 +91,8 @@ export function TaskItem({ task, listID }: TaskItemProps) {
       return;
     }
     updateTask(listID, task.id, currentContent);
-    toast.success("Tarea actualizada correctamente");
     setIsTaskEditing(false);
+    toast.success("Tarea actualizada correctamente");
   };
 
   // maneja las pulsaciones de teclado para guardar o cancelar la edición.
@@ -84,26 +109,29 @@ export function TaskItem({ task, listID }: TaskItemProps) {
   // Destructuring del register para separar ref de otras props
   const { ref: registerRef, ...registerProps } = register('content', { required: true });
 
+  // Aplica transformaciones durante el arrastre
+  // `transform` proviene de useDraggable y nos da la posición relativa
   const style = transform
     ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` }
     : undefined;
 
   return (
     <li
-      ref={setNodeRef} // Referencia para el draggable
+      ref={setRef} // combina refs de draggable y droppable
       style={style}
       className="bg-white p-2 rounded text-sm flex justify-between items-center shadow-xs select-none active:shadow-lg transition-shadow duration-150"
     >
       <div className="flex items-center flex-grow">
-        {/* Área para iniciar el drag */}
-        <div
+        {/* Drag handle al hacer clic y arrastrar desde este botón se inicia el drag */}
+        <button
           {...listeners}
           {...attributes}
           className="drag-handle mr-2 cursor-move select-none touch-none"
         >
           <DragHandleIcon className="h-5 w-5 text-gray-600" />
 
-        </div>
+        </button>
+         {/* Si está en modo edición, mostramos un input para editar la tarea */}
         {
           isTaskEditing ? (
             <input
@@ -137,7 +165,7 @@ export function TaskItem({ task, listID }: TaskItemProps) {
           )
         }
       </div>
-      {/* Aquí puedes añadir un botón para eliminar la tarea si lo deseas */}
+      {/* Aquí se puede añadir un botón para eliminar la tarea */}
     </li>
   );
 }

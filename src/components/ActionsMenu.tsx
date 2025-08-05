@@ -49,7 +49,7 @@ export function ActionsMenu({ boardID }: ActionsMenuProps) {
         <MenuItem>
           <button 
             className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-gray-100 cursor-pointer"
-            onClick={handleBoardDelete}
+            onClick={ handleBoardDelete }
           >
             <TrashIcon className="size-4 fill-gray-500" />
             Eliminar

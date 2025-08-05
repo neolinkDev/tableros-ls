@@ -29,7 +29,7 @@ export function BoardForm({
   return (
     <form
       className="flex flex-col sm:flex-row sm:items-center p-5 max-w-xl mx-auto mt-10 bg-white sm:space-x-4"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={ handleSubmit(onSubmit) }
       noValidate
     >
       <div className="mb-5 space-y-3 sm:flex-grow">

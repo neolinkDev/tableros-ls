@@ -84,6 +84,17 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+   const reorderTask = (
+    boardID: string,
+    listID: string,
+    fromIndex: number,
+    toIndex: number
+  ) =>
+    dispatch({
+      type: ActionType.REORDER_TASK,
+      payload: { boardID, listID, fromIndex, toIndex },
+    });
+
   // ... otras acciones
 
   return (
@@ -97,7 +108,8 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
         updateList,
         createTask,
         updateTask,
-        moveTask
+        moveTask,
+        reorderTask
       }}
     >
       {children}

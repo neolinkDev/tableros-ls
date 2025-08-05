@@ -13,7 +13,13 @@ interface BoardContextType {
   createTask: ( boardID: string, listID: string, content: string) => void
   updateTask: (listID: string, taskID: string, content: string) => void;
   moveTask: (boardID: string, taskID: string, sourceListID: string, destinationListID: string) => void;
-  // ... similar para listas y tareas
+   reorderTask: (
+    boardID: string,
+    listID: string,
+    fromIndex: number,
+    toIndex: number
+  ) => void;
+  
 }
 
 // crea el contexto

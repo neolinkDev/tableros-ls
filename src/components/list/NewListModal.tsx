@@ -18,9 +18,9 @@ export const NewListModal = ({
   onClose,
   onSubmit,
 }: NewListModalProps) => {
-  // Usamos useForm para manejar el estado del formulario.
-  // Los `defaultValues` se establecen dinámicamente: si estamos editando, usamos `initialValues`;
-  // si no, un objeto vacío para empezar desde cero.
+  // Si hay valores iniciales estamos en modo edición
+  // En modo creación usamos un título vacío
+  // si `initialValues` cambia en tiempo de ejecución, llama a `reset` en un useEffect.
   const { register, handleSubmit, reset } = useForm<FormValues>({
     defaultValues: initialValues || { listTitle: '' },
   });
@@ -118,7 +118,7 @@ export const NewListModal = ({
                 border-[#b2dcfc] hover:border-[#ebf5ff] cursor-pointer
               "
             >
-              {mode === 'create' ? 'Añadir' : 'Guardar'}
+              { mode === 'create' ? 'Añadir' : 'Guardar' }
             </button>
           </div>
         </form>
