@@ -22,6 +22,11 @@ export function ListColumn({ list, onEdit }: ListColumnProps) {
     data: { type: 'list' }, // etiquetamos este droppable como lista
   });
 
+  // Cuando hay 3 o más tareas, limitamos la altura del contenedor para
+  // que aparezca una barra de scroll vertical y se puedan ver las tareas
+  // adicionales sin que la lista crezca indefinidamente.
+  const tasksShouldScroll = list.tasks.length >= 3;
+
   return (
     <li
       ref={setNodeRef} // la referencia se asigna al elemento li
@@ -44,8 +49,8 @@ export function ListColumn({ list, onEdit }: ListColumnProps) {
         </div>
       </div>
 
-      <ul 
-        className="mt-2 space-y-1"
+      <ul
+        className={`mt-2 space-y-1 ${tasksShouldScroll ? 'max-h-40 overflow-y-auto' : ''}`}
       >
         {
         list.tasks.map((task) => (
