@@ -1,4 +1,4 @@
-// src/components/list/ListColumn.tsx
+
 
 import { useDroppable } from '@dnd-kit/core';
 import { PencilIcon } from '@heroicons/react/20/solid';
@@ -44,14 +44,18 @@ export function ListColumn({ list, onEdit }: ListColumnProps) {
         </div>
       </div>
 
-      <ul className="mt-2 space-y-1">
-        {list.tasks.map((task) => (
+      <ul 
+        className="mt-2 space-y-1"
+      >
+        {
+        list.tasks.map((task) => (
           <TaskItem
             key={task.id}
             task={task}
             listID={list.id}
           />
-        ))}
+        ))
+        }
       </ul>
 
       <AddTaskToList listID={list.id} />
