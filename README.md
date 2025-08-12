@@ -1,54 +1,37 @@
-# React + TypeScript + Vite
+# Tableros LS 📋
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web para organizar proyectos mediante tableros, listas y tareas al estilo Trello. Permite crear múltiples tableros, añadir listas dentro de cada uno y gestionar tareas con soporte de arrastrar y soltar.
 
-Currently, two official plugins are available:
+## Características ✨
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Creación, edición y eliminación de tableros.
+- Añadir y modificar listas dentro de un tablero.
+- Añadir, editar y mover tareas entre listas con drag‑and‑drop.
+- Persistencia de datos en `localStorage`.
+- Notificaciones visuales al crear o modificar elementos.
 
-## Expanding the ESLint configuration
+## Tecnologías principales 🛠️
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React + TypeScript + Vite
+- React Router
+- @dnd-kit/core (drag‑and‑drop)
+- Tailwind CSS
+- react-hook-form
+- Headless UI y Heroicons
+- Sonner (notificaciones)
+- UUID
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Scripts disponibles 📜
+
+```bash
+npm install     # instala dependencias
+npm run dev     # entorno de desarrollo
+npm run build   # genera la versión de producción
+npm run preview # sirve la compilación para verificación
 ```
+## Uso básico 🚀
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+1. Clona el repositorio y ejecuta `npm install`.
+2. Arranca el servidor de desarrollo con `npm run dev`.
+3. Abre `http://localhost:5173` (o el puerto indicado por Vite) en tu navegador.
+4. Crea tu primer tablero, listas y tareas. Arrastra las tareas entre listas para reorganizarlas.

@@ -33,6 +33,9 @@ export function AppLayout() {
       </main>
 
       <footer className="p-5 border-t border-t-gray-200">
+        <p className="text-center">
+          Desarrollado por <a className=" font-bold" href="https://jorge-rubio.pages.dev/" target="_blank" rel="noopener noreferrer">Jorge Rubio</a>
+        </p>
         <p className='text-center'>
           &copy; {new Date().getFullYear()}
         </p>
