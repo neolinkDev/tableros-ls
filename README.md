@@ -2,6 +2,8 @@
 
 Aplicación web para organizar proyectos mediante tableros, listas y tareas al estilo Trello. Permite crear múltiples tableros, añadir listas dentro de cada uno y gestionar tareas con soporte de arrastrar y soltar.
 
+![Captura de pantalla](https://github.com/user-attachments/assets/2416fa1c-962e-4c32-bf0e-0bef59b9248c)
+
 ## Características ✨
 
 - Creación, edición y eliminación de tableros.

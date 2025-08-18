@@ -23,6 +23,7 @@ export default function EditeBoardPage() {
   // validaciones con returns anticipados
   if (!boardID) {
     // return <p className="text-red-600">Error: ID de tablero inválido.</p>;
+    // return <Navigate to="/404" replace />;
     return <Navigate to="/404" replace />;
   }
 
