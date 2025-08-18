@@ -4,6 +4,7 @@ import { DashboardPage } from '../pages/DashboardPage';
 import { CreateBoardPage } from '../pages/boards/CreateBoardPage';
 import ListBoardDetails from '../pages/boards/ListBoardDetails';
 import EditeBoardPage from '../pages/boards/EditeBoardPage';
+import { Error404 } from '../pages/Error404';
 
 export function AppRouter() {
   return (
@@ -16,7 +17,11 @@ export function AppRouter() {
             <Route path="/boards/create" element={<CreateBoardPage />} />
             <Route path="/boards/:boardID" element={<ListBoardDetails />} />
             <Route path="/boards/:boardID/edit" element={<EditeBoardPage />} />
+
+            <Route path="/404" element={<Error404 />} />
+            <Route path="*" element={<Error404 />} />
           </Route>
+
         </Route>
       </Routes>
     </BrowserRouter>

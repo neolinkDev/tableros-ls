@@ -6,7 +6,6 @@ export function BoardList() {
 
   const { boards } = useContext(BoardContext);
  
-
   return (
     <>
       {

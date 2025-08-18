@@ -28,6 +28,7 @@ export default function ListBoardDetails() {
   //
   const [selectedListId, setSelectedListId] = useState<string | null>(null);
 
+  // if (!boardID) return <Navigate to="/404" replace />;
   if (!boardID) return <Navigate to="/404" replace />;
 
   const board = boards.find((board) => board.id === boardID);
