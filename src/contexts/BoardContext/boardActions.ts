@@ -18,8 +18,8 @@ export type BoardAction =
   | { type: ActionType.DELETE_BOARD; payload: { id: string } }
   | { type: ActionType.CREATE_LIST; payload: { id: string; listTitle: string } }
   | { type: ActionType.UPDATE_LIST; payload: { boardId: string, listId: string, listTitle: string } }
-  | { type: ActionType.CREATE_TASK; payload: { boardID: string, listID: string, content: string } }
-  | { type: ActionType.UPDATE_TASK; payload: { listID: string, taskID: string, content: string } }
+  | { type: ActionType.CREATE_TASK; payload: { boardID: string, listID: string, content: string, dueDate?: string } }
+  | { type: ActionType.UPDATE_TASK; payload: { listID: string, taskID: string, content: string, dueDate?: string } }
   | { 
       type: ActionType.MOVE_TASK; 
       payload: { 

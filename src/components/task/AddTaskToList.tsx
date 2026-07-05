@@ -21,8 +21,13 @@ export default function AddTaskToList({ listID }: AddTaskToListProps ) {
   const [isAddingTask, setIsAddingTask] = useState(false);
 
   //
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: { content: "" },
+  // const { register, handleSubmit, reset } = useForm({
+  //   defaultValues: { content: "" },
+  // });
+
+  //
+  const { register, handleSubmit, reset } = useForm<{ content: string; dueDate?: string }>({
+    defaultValues: { content: "", dueDate: "" },
   });
 
   // Ref y efecto para enfocar el input al abrir el formulario
@@ -44,14 +49,15 @@ export default function AddTaskToList({ listID }: AddTaskToListProps ) {
     reset();
   };
 
-  // 
-  const handleAddTaskClick = (data: {content: Task['content']}) => {
+  // Maneja el envío del formulario de nueva tarea
+  const handleAddTaskClick = (data: { content: Task['content']; dueDate?: string }) => {
     if (!boardID) {
       toast.error("No se pudo identificar el tablero.");
       return;
     }
-    
-    createTask(boardID, listID, data.content)
+
+    const dueDate = data.dueDate || undefined;
+    createTask(boardID, listID, data.content, dueDate)
     setIsAddingTask(false);
     reset();
     toast.success("Tarea agregada.")
@@ -78,13 +84,26 @@ export default function AddTaskToList({ listID }: AddTaskToListProps ) {
             inputRef.current = e; // Tu ref personal
           }}
         />
+
+         <div className="mt-2">
+          <label htmlFor="dueDate" className="block text-xs text-gray-500 mb-1">
+            📅 Fecha de entrega (opcional)
+          </label>
+          <input
+            id="dueDate"
+            type="date"
+            className="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 text-sm focus:outline-none focus:shadow-outline"
+            {...register('dueDate')}
+          />
+        </div>
+        
         <div className="mt-1">
           <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline text-xs mr-1 cursor-pointer">
             Agregar
           </button>
           <button
             className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline text-xs cursor-pointer"
-            onClick={handleCancelClick}
+            onClick={ handleCancelClick }
             type="button"
           >
             Cancelar

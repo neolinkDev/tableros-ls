@@ -15,5 +15,5 @@ export interface List {
 export interface Task {
   id: string;
   content: string;
-  
+  dueDate?: string; //Fecha de entrega opcional, formato ISO YYYY-MM-DD 
 }

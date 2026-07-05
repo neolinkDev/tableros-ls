@@ -105,7 +105,7 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
     //
     case ActionType.CREATE_TASK: {
 
-      const { boardID, listID, content } = action.payload
+      const { boardID, listID, content, dueDate } = action.payload
       
       // 
       const updatedBoards = state.boards.map(board => {
@@ -127,6 +127,7 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
           const newTask: Task = {
             id: v4(), 
             content,
+            dueDate, // assign the dueDate from the payload
           };
 
           // create a new list object with the new task added to its tasks array
@@ -155,7 +156,7 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
     //
     case ActionType.UPDATE_TASK: {
 
-      const { listID, taskID, content } = action.payload;
+      const { listID, taskID, content, dueDate } = action.payload;
 
       const updatedBoards = state.boards.map(board => {
 
@@ -179,7 +180,7 @@ export const boardReducer = (state: BoardState, action: BoardAction): BoardState
               return task;
             }
             // encontró la tarea objetivo, actualiza su contenido inmutablemente
-            return { ...task, content };
+            return { ...task, content, dueDate }; // actualiza el contenido y la fecha de entrega
           });
           
           return { ...list, tasks: updatedTasks };

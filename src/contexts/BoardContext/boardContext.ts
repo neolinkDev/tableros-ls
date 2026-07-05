@@ -10,8 +10,8 @@ interface BoardContextType {
   deleteBoard: (id: string) => void
   createList: (id: string, listTitle: string) => void;
   updateList: (boardId: string, listId: string, listTitle: string) => void
-  createTask: ( boardID: string, listID: string, content: string) => void
-  updateTask: (listID: string, taskID: string, content: string) => void;
+  createTask: ( boardID: string, listID: string, content: string, dueDate?: string) => void
+  updateTask: (listID: string, taskID: string, content: string, dueDate?: string) => void;
   moveTask: (boardID: string, taskID: string, sourceListID: string, destinationListID: string) => void;
    reorderTask: (
     boardID: string,

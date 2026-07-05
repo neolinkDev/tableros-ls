@@ -57,18 +57,18 @@ export function BoardProvider({ children }: { children: React.ReactNode }) {
       payload: { boardId, listId, listTitle },
     });
   };
-
-  const createTask = ( boardID: string, listID: string, content: string) => {
+  
+  const createTask = ( boardID: string, listID: string, content: string, dueDate?: string) => {
     dispatch({
       type: ActionType.CREATE_TASK,
-      payload: { boardID, listID, content}
+      payload: { boardID, listID, content, dueDate }
     })
   }
 
-  const updateTask = (listID: string, taskID: string, content: string) => {
+  const updateTask = (listID: string, taskID: string, content: string, dueDate?: string) => {
     dispatch({
       type: ActionType.UPDATE_TASK,
-      payload: { listID, taskID, content },
+      payload: { listID, taskID, content, dueDate },
     });
   };
 

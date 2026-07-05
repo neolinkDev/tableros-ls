@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import type { Task } from '../../types';
 import { BoardContext } from '../../contexts/BoardContext/boardContext';
 import DragHandleIcon from '../icons/DragHandleIcon';
+import { formatDisplayDate } from '../../utils/dateUtils';
 
 
 interface TaskItemProps {
@@ -17,6 +18,7 @@ interface TaskItemProps {
 // tipo para los valores del formulario de TaskItem 
 type TaskFormValues = {
   content: string;
+   dueDate?: string;
 };
 
 export function TaskItem({ task, listID }: TaskItemProps) {
@@ -58,7 +60,7 @@ export function TaskItem({ task, listID }: TaskItemProps) {
 
   // inicia 'react-hook-form'
   const { register, reset, getValues, setValue } = useForm<TaskFormValues>({
-    defaultValues: { content: task.content },
+    defaultValues: { content: task.content, dueDate: task.dueDate ?? '' },
   });
 
   // referencia al input en modo edición para poder enfocarlo
@@ -67,11 +69,11 @@ export function TaskItem({ task, listID }: TaskItemProps) {
   useEffect(() => {
     // Cuando pasa a modo edición, cargamos el valor actual y enfocamos
     if (isTaskEditing) {
-      reset({ content: task.content }); 
+      reset({ content: task.content, dueDate: task.dueDate ?? '' }); 
       inputRef.current?.focus();      
       inputRef.current?.select();        
     }
-  }, [isTaskEditing, task.content, reset]); 
+  }, [isTaskEditing, task.content, task.dueDate, reset]);
 
   // inicia el modo de edición al hacer clic en el texto de la tarea
   const handleTaskClick = (): void => {
@@ -80,17 +82,23 @@ export function TaskItem({ task, listID }: TaskItemProps) {
 
   // guarda los cambios en la tarea.
   const handleSaveEdit = (): void => {
-    const currentContent = getValues('content').trim(); 
+    const currentContent = getValues('content').trim();
+    const currentDueDate = getValues('dueDate') || undefined;
+    const originalDueDate = task.dueDate ?? undefined;
+
     if (currentContent === '') {
       setValue('content', task.content);
       setIsTaskEditing(false);
       return;
     }
-    if (currentContent === task.content) {
+
+    const nothingChanged = currentContent === task.content && currentDueDate === originalDueDate;
+    if (nothingChanged) {
       setIsTaskEditing(false);
       return;
     }
-    updateTask(listID, task.id, currentContent);
+
+    updateTask(listID, task.id, currentContent, currentDueDate);
     setIsTaskEditing(false);
     toast.success("Tarea actualizada correctamente");
   };
@@ -104,6 +112,17 @@ export function TaskItem({ task, listID }: TaskItemProps) {
       setIsTaskEditing(false);                
       setValue('content', task.content); 
     }
+  };
+
+  /**
+   * Guarda solo cuando el foco sale por completo del bloque de edición
+   * (no cuando se mueve del input de texto al input de fecha, o viceversa).
+  */
+  const handleContainerBlur = (e: React.FocusEvent<HTMLDivElement>): void => {
+    if (e.currentTarget.contains(e.relatedTarget as Node)) {
+      return;
+    }
+    handleSaveEdit();
   };
 
   // Destructuring del register para separar ref de otras props
@@ -134,34 +153,52 @@ export function TaskItem({ task, listID }: TaskItemProps) {
          {/* Si está en modo edición, mostramos un input para editar la tarea */}
         {
           isTaskEditing ? (
-            <input
-              {...registerProps}
-              ref={(e) => {
-                registerRef(e);
-                inputRef.current = e;
-              }}
-              type="text"
-              onBlur={handleSaveEdit}
-              onKeyDown={handleKeyDown}
-              className="flex-grow bg-white p-1 rounded border border-blue-300 focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-inner text-gray-800"
-              aria-label="Editar contenido de la tarea"
-            />
+            <div className="flex flex-col flex-grow gap-1" onBlur={handleContainerBlur}>
+              <input
+                {...registerProps}
+                ref={(e) => {
+                  registerRef(e);
+                  inputRef.current = e;
+                }}
+                type="text"
+                // onBlur={handleSaveEdit}
+                onKeyDown={handleKeyDown}
+                className="bg-white p-1 rounded border border-blue-300 focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-inner text-gray-800"
+                aria-label="Editar contenido de la tarea"
+              />
+
+              <input
+                type="date"
+                {...register('dueDate')}
+                // onBlur={handleSaveEdit}
+                className="bg-white p-1 rounded border border-blue-300 focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-inner text-gray-700 text-xs"
+                aria-label="Fecha de entrega (opcional)"
+              />
+            </div>
           ) : (
-            <span
-              className="flex-grow cursor-pointer text-gray-800 p-1 rounded"
-              onClick={handleTaskClick}
-              tabIndex={0}
-              role="button"
-              aria-label={`Tarea: ${task.content}. Haz clic para editar.`}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleTaskClick();
-                }
-              }}
-            >
-              {task.content}
-            </span>
+            <div className="flex flex-col flex-grow">
+              <span
+                className="cursor-pointer text-gray-800 p-1 rounded"
+                onClick={handleTaskClick}
+                tabIndex={0}
+                role="button"
+                aria-label={`Tarea: ${task.content}. Haz clic para editar.`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTaskClick();
+                  }
+                }}
+              >
+                {task.content}
+              </span>
+
+              {task.dueDate && (
+                <span className="text-xs text-gray-400 px-1">
+                  📅 {formatDisplayDate(task.dueDate)}
+                </span>
+              )}
+            </div>
           )
         }
       </div>
